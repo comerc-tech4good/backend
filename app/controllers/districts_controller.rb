@@ -1,5 +1,4 @@
 class DistrictsController < ApplicationController
-  before_action :district_params, only: %i[top_matches]
 
   # GET api/pageload
   def index
@@ -7,13 +6,11 @@ class DistrictsController < ApplicationController
 
     # just get names of table entries
     activities = Activity.all.map(&:name)
-    districts = District.all(&:barris)
-    criteria = Criteria.all(&:name)
+    criteria = Criterium.all.map(&:name)
 
     # answer with json (no error handling)
     render json: {
       activities:,
-      districts:,
       criteria:
     }
   end
@@ -22,8 +19,7 @@ class DistrictsController < ApplicationController
   def top_matches
 
     # get the parameters from the form
-    json_data = params
-    p json_data
+    puts params
 
     # for now only top3 matches
     top_x = 3
