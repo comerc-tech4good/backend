@@ -7,6 +7,6 @@ Rails.application.routes.draw do
     # returns: list of all activities and filtering options
 
   # form GET that will have params
-  post 'top_matches', to: 'districts#top_matches'
+  post 'neighborhood', to: 'districts#top_matches'
     # returns best X=3 districts for each filter
 end
