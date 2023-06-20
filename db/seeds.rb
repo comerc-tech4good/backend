@@ -36,6 +36,7 @@ puts "Created #{Activity.all.count} activities"
 #####################################
 
 puts 'Creating districts'
+puts 'Importing from CSV file'
 
 database_file_path = 'db/data/tabla.csv'
 options = {
@@ -47,11 +48,25 @@ SmarterCSV.process(database_file_path, options) do |chunk|
   District.create(chunk) # Replace "YourModel" with the appropriate model name
 end
 
+puts 'Deleting neighborhoods with null data...'
+
+District.all.each do |district|
+  district.destroy if district.precio_alquiler.nil? || district.precio_venta.nil?
+end
+
+puts 'Done!'
 puts "Created #{District.all.count} districts"
+
+#####################################
+#                                   #
+#                                   #
+#             CRITERIA              #
+#                                   #
+#                                   #
+#####################################
 
 puts 'Creating Criteria'
 
-# create criterias
 column_names[1..5].each do |column_name|
   Criterium.create!(name: column_name.capitalize.gsub('_', ' '))
 end
