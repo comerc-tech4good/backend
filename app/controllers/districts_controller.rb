@@ -18,11 +18,10 @@ class DistrictsController < ApplicationController
   def top_matches
 
     activity = params[:activities] # (singular)? activity to get matches for
-    categories_to_check = params[:parameters].split(",") # array of [alquiler, venta]
+    categories_to_check = params[:parameters] # array of [alquiler, venta]
 
     # init hash with response contents
-    query_response = {}
-    query_response["response"] = []
+    query_response = []
 
     # for each category (parameter) like price, get 3 neighborhoods
     categories_to_check.each do |category|
@@ -47,7 +46,7 @@ class DistrictsController < ApplicationController
       end
 
       # push neighborhoods into the response - for their given parameters
-      query_response['response'] << {"parameter": category, "neighborhood": neighborhoods}
+      query_response << {"parameter": category, "neighborhood": neighborhoods}
     end
 
     render json: query_response
